@@ -1,12 +1,11 @@
+const webpack = require('webpack');
+
 module.exports = {
-  css: {
-    loaderOptions: {
-      postcss: {
-        plugins: [
-          require('tailwindcss'),
-          require('autoprefixer'),
-        ],
-      },
-    },
+  configureWebpack: {
+    plugins: [
+      new webpack.DefinePlugin({
+        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: JSON.stringify(true),
+      }),
+    ],
   },
-}
+};
