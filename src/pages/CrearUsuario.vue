@@ -36,9 +36,9 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                 <div class="flex items-end gap-2">
                     <div class="flex-1">
-                        <label for="nickname" class="block text-sm font-medium text-black">DNI/RUC *</label>
+                        <label for="codigo" class="block text-sm font-medium text-black">DNI/RUC *</label>
                         <div class="flex">
-                            <input type="text" v-model="nickname" id="nickname" @input="handleInputNickname"
+                            <input type="text" v-model="codigo" id="codigo" @input="handleInputCodigo"
                                 placeholder="Ingresar DNI/RUC" pattern="\d*"
                                 class="border border-gray-300 rounded-l-lg px-3 py-2 mb-2 w-full text-sm" />
                             <a @click="consultarUsuario"
@@ -47,10 +47,10 @@
                             </a>
                         </div>
                         <div class="block text-sm font-medium text-black text-end pr-[105px]">
-                            {{ nickname.length }}/11
+                            {{ codigo.length }}/11
                         </div>
-                        <div v-if="errorMessages.nickname" class="text-[#ff0000] text-xs mt-1">
-                            {{ errorMessages.nickname }}
+                        <div v-if="errorMessages.codigo" class="text-[#ff0000] text-xs mt-1">
+                            {{ errorMessages.codigo }}
                         </div>
                     </div>
                 </div>
@@ -72,15 +72,15 @@
             <!-- Tercera fila -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
                 <div>
-                    <label for="codigo" class="block text-sm font-medium text-black">ID Usuario *</label>
-                    <input type="text" v-model="codigo" id="codigo" @input="handleInputCodigo"
+                    <label for="nickname" class="block text-sm font-medium text-black">ID Usuario *</label>
+                    <input type="text" v-model="nickname" id="nickname" @input="handleInputNickname"
                         placeholder="Ingresar Usuario"
                         class="border border-gray-300 rounded-lg px-3 py-2 mb-2 w-full text-sm" />
                     <div class="block text-sm font-medium text-black text-end">
-                        {{ codigo.length }}/15
+                        {{ nickname.length }}/15
                     </div>
-                    <div v-if="errorMessages.codigo" class="text-[#ff0000] text-xs mt-1">{{
-                        errorMessages.codigo }}
+                    <div v-if="errorMessages.nickname" class="text-[#ff0000] text-xs mt-1">{{
+                        errorMessages.nickname }}
                     </div>
                 </div>
                 <div>
@@ -182,13 +182,13 @@ export default {
             this.nombre = this.nombre.toUpperCase();
             this.errorMessages.nombre = '';
         },
-        handleInputCodigo() {
-            this.codigo = this.codigo.toUpperCase().slice(0, 15);
-            this.errorMessages.codigo = '';
-        },
         handleInputNickname() {
-            this.nickname = this.nickname.replace(/[^0-9]/g, '').toUpperCase().slice(0, 11);
+            this.nickname = this.nickname.toUpperCase().slice(0, 15);
             this.errorMessages.nickname = '';
+        },
+        handleInputCodigo() {
+            this.codigo = this.codigo.replace(/[^0-9]/g, '').toUpperCase().slice(0, 11);
+            this.errorMessages.codigo = '';
         },
         volver() {
             this.$router.push({ name: 'Usuario' });
@@ -219,11 +219,11 @@ export default {
             let isValid = true;
             this.errorMessages = {};
 
-            if (!this.nickname) {
-                this.errorMessages.nickname = '* El campo DNI/RUC es obligatorio.';
+            if (!this.codigo) {
+                this.errorMessages.codigo = '* El campo DNI/RUC es obligatorio.';
                 isValid = false;
-            } else if (this.nickname.length !== 8 && this.nickname.length !== 11) {
-                this.errorMessages.nickname = '* El DNI/RUC debe tener 8 o 11 dígitos.';
+            } else if (this.codigo.length !== 8 && this.codigo.length !== 11) {
+                this.errorMessages.codigo = '* El DNI/RUC debe tener 8 o 11 dígitos.';
                 isValid = false;
             }
 
@@ -237,10 +237,10 @@ export default {
 
             let consulta = "";
 
-            if (this.nickname.length === 8) {
-                consulta = `/Sunat/consulta-dni?dni=${this.nickname}`;
-            } else if (this.nickname.length === 11) {
-                consulta = `/Sunat/consulta-ruc?ruc=${this.nickname}`;
+            if (this.codigo.length === 8) {
+                consulta = `/Sunat/consulta-dni?dni=${this.codigo}`;
+            } else if (this.codigo.length === 11) {
+                consulta = `/Sunat/consulta-ruc?ruc=${this.codigo}`;
             }
 
             try {
@@ -253,9 +253,9 @@ export default {
                 });
 
                 if (response.status === 200 && response.data) {
-                    if (this.nickname.length === 11) {
+                    if (this.codigo.length === 11) {
                         this.nombre = response.data.nombre || "";
-                    } else if (this.nickname.length === 8) {
+                    } else if (this.codigo.length === 8) {
                         this.nombre = `${response.data.vNombres || ""} ${response.data.vApePaterno || ""} ${response.data.vApeMaterno || ""}`.trim();
                     }
 
@@ -282,16 +282,16 @@ export default {
                 isValid = false;
             }
 
-            if (!this.nickname) {
-                this.errorMessages.nickname = '* El campo DNI/RUC es obligatorio.';
+            if (!this.codigo) {
+                this.errorMessages.codigo = '* El campo DNI/RUC es obligatorio.';
                 isValid = false;
-            } else if (this.nickname.length !== 8 && this.nickname.length !== 11) {
-                this.errorMessages.nickname = '* El DNI/RUC debe tener 8 o 11 dígitos.';
+            } else if (this.codigo.length !== 8 && this.codigo.length !== 11) {
+                this.errorMessages.codigo = '* El DNI/RUC debe tener 8 o 11 dígitos.';
                 isValid = false;
             }
 
-            if (!this.codigo) {
-                this.errorMessages.codigo = '* El campo ID Usuario es obligatorio';
+            if (!this.nickname) {
+                this.errorMessages.nickname = '* El campo ID Usuario es obligatorio';
                 isValid = false;
             }
 

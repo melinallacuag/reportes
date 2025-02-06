@@ -33,8 +33,8 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
 
                 <div>
-                    <label for="usuario" class="block text-sm font-medium text-black">DNI/RUC:</label>
-                    <input type="text" v-model="usuario.nickname" id="usuario" disabled
+                    <label for="codigo" class="block text-sm font-medium text-black">DNI/RUC:</label>
+                    <input type="text" v-model="usuario.codigo" id="codigo" disabled
                         class="border border-gray-300 rounded-lg px-3 py-2 mb-2 w-full bg-gray-100 cursor-not-allowed text-sm" />
                 </div>
                 <div>
@@ -50,8 +50,8 @@
             <!-- Tercera fila -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
                 <div>
-                    <label for="codigo" class="block text-sm font-medium text-black">ID Usuario:</label>
-                    <input type="text" v-model="usuario.codigo" id="codigo" disabled
+                    <label for="nickname" class="block text-sm font-medium text-black">ID Usuario:</label>
+                    <input type="text" v-model="usuario.nickname" id="nickname" disabled
                         class="border border-gray-300 rounded-lg px-3 py-2 mb-2 w-full bg-gray-100 cursor-not-allowed text-sm" />
                 </div>
                 <div>
